@@ -1,0 +1,7 @@
+{
+  "name": "UBICA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
