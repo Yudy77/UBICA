@@ -1,0 +1,106 @@
+﻿<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Nuevo registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card class="registro-card">
+    <ion-card-content>
+
+      <h2>Datos del registro</h2>
+      <p>Guarda su ubicación para encontrarlo fácilmente.</p>
+
+      <ion-list>
+
+        <ion-item>
+          <ion-select label="Tipo de registro" placeholder="Seleccione una categoría"
+            labelPlacement="stacked"
+            [(ngModel)]="tipo">
+            <ion-select-option value="Objeto">Objeto</ion-select-option>
+            <ion-select-option value="Documento">Documento</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Nombre del registro"
+            labelPlacement="stacked"
+            placeholder="Introduzca el nombre"
+            [(ngModel)]="nombre">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Ubicación general"
+            labelPlacement="stacked"
+            placeholder="Indique el lugar"
+            [(ngModel)]="ubicacionGeneral">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Ubicación específica"
+            labelPlacement="stacked"
+            placeholder="Describa dónde está guardado"
+            [(ngModel)]="ubicacionEspecifica">
+          </ion-input>
+        </ion-item>
+
+      </ion-list>
+
+<div class="imagen-registro">
+  <label>Imagen del registro</label>
+
+  <input type="file" accept="image/*"
+    (change)="seleccionarImagen($event)">
+
+  <div class="visor-imagen" *ngIf="imagen"
+    (touchstart)="iniciarZoom($event)"
+    (touchmove)="ampliarImagen($event)">
+
+    <img [src]="imagen"
+      [style.transform]="'scale(' + escala + ')'"
+      alt="Imagen del registro">
+  </div>
+
+  <p *ngIf="imagen">Utiliza dos dedos para ampliar la imagen.</p>
+</div>
+
+      <div class="acciones">
+        <ion-button fill="outline">
+          <ion-icon name="mic-outline" slot="start"></ion-icon>
+          Dictar por voz
+        </ion-button>
+
+        <ion-button fill="outline">
+          <ion-icon name="camera-outline" slot="start"></ion-icon>
+          Tomar foto
+        </ion-button>
+      </div>
+
+      <ion-button expand="block" (click)="guardar()"
+        [disabled]="!tipo || !nombre.trim() || !ubicacionGeneral.trim() || !ubicacionEspecifica.trim()">
+        Guardar registro
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="guardar()"
+      aria-label="Guardar registro"
+      [disabled]="!tipo || !nombre.trim() || !ubicacionGeneral.trim() || !ubicacionEspecifica.trim()">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+
+

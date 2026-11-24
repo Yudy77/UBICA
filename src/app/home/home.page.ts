@@ -1,5 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 import {
   IonHeader,
@@ -9,11 +10,7 @@ import {
 } from '@ionic/angular';
 
 import { IonCard } from '@ionic/angular/ion-card';
-import { IonCardHeader } from '@ionic/angular/ion-card-header';
-import { IonCardTitle } from '@ionic/angular/ion-card-title';
-import { IonCardSubtitle } from '@ionic/angular/ion-card-subtitle';
 import { IonCardContent } from '@ionic/angular/ion-card-content';
-
 import { IonList } from '@ionic/angular/ion-list';
 import { IonItem } from '@ionic/angular/ion-item';
 import { IonItemSliding } from '@ionic/angular/ion-item-sliding';
@@ -21,9 +18,23 @@ import { IonItemOptions } from '@ionic/angular/ion-item-options';
 import { IonItemOption } from '@ionic/angular/ion-item-option';
 import { IonLabel } from '@ionic/angular/ion-label';
 import { IonIcon } from '@ionic/angular/ion-icon';
+import { IonButtons } from '@ionic/angular/ion-buttons';
+import { IonMenuButton } from '@ionic/angular/ion-menu-button';
+import { IonRefresher } from '@ionic/angular/ion-refresher';
+import { IonRefresherContent } from '@ionic/angular/ion-refresher-content';
+import { IonFab } from '@ionic/angular/ion-fab';
+import { IonFabButton } from '@ionic/angular/ion-fab-button';
 
 import { addIcons } from 'ionicons';
-import { trash } from 'ionicons/icons';
+import {
+  trash,
+  cubeOutline,
+  documentTextOutline,
+  addOutline,
+  searchOutline,
+  keyOutline,
+  notificationsOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -32,14 +43,12 @@ import { trash } from 'ionicons/icons';
   styleUrls: ['home.page.scss'],
   imports: [
     CommonModule,
+    RouterLink,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
     IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
     IonCardContent,
     IonList,
     IonItem,
@@ -47,34 +56,112 @@ import { trash } from 'ionicons/icons';
     IonItemOptions,
     IonItemOption,
     IonLabel,
-    IonIcon
+    IonIcon,
+    IonButtons,
+    IonMenuButton,
+    IonRefresher,
+    IonRefresherContent,
+    IonFab,
+    IonFabButton
   ],
 })
 export class HomePage {
+  temporizador: ReturnType<typeof setTimeout> | null = null;
+  registroSeleccionado: any = null;
+  menuContextual = false;
+  inicioX = 0;
+  inicioY = 0;
 
-  tareas = [
+  iniciarPulsacion(event: PointerEvent, registro: any) {
+    this.cancelarPulsacion();
+    this.inicioX = event.clientX;
+    this.inicioY = event.clientY;
+
+    this.temporizador = setTimeout(() => {
+      this.registroSeleccionado = registro;
+      this.menuContextual = true;
+    }, 800);
+  }
+
+  detectarMovimiento(event: PointerEvent) {
+    if (Math.abs(event.clientX - this.inicioX) > 10 ||
+        Math.abs(event.clientY - this.inicioY) > 10) {
+      this.cancelarPulsacion();
+    }
+  }
+
+  cancelarPulsacion() {
+    if (this.temporizador !== null) {
+      clearTimeout(this.temporizador);
+      this.temporizador = null;
+    }
+  }
+
+  cerrarMenu() {
+    this.menuContextual = false;
+  }
+
+  registros = [
     {
       id: 1,
-      titulo: 'Tarea 1',
-      descripcion: 'Estudiar componentes Ionic'
+      nombre: 'Llaves',
+      tipo: 'Objeto',
+      ubicacion: 'Escritorio, gaveta superior',
+      icono: 'key-outline'
     },
     {
       id: 2,
-      titulo: 'Tarea 2',
-      descripcion: 'Practicar listas interactivas'
-    },
-    {
-      id: 3,
-      titulo: 'Tarea 3',
-      descripcion: 'Probar la aplicación en Android'
+      nombre: 'Contrato',
+      tipo: 'Documento',
+      ubicacion: 'Oficina, carpeta azul',
+      icono: 'document-text-outline'
     }
   ];
 
   constructor() {
-    addIcons({ trash });
+    addIcons({
+      trash,
+      cubeOutline,
+      documentTextOutline,
+      addOutline,
+      searchOutline,
+      keyOutline,
+      notificationsOutline
+    });
+  }
+
+  ngOnInit() {
+    this.cargarRegistros();
+  }
+
+  ionViewWillEnter() {
+    this.cargarRegistros();
+  }
+
+  cargarRegistros() {
+    const datos = localStorage.getItem('ubica-registros');
+
+    if (datos !== null) {
+      this.registros = JSON.parse(datos);
+    } else {
+      localStorage.setItem('ubica-registros', JSON.stringify(this.registros));
+    }
   }
 
   eliminar(id: number) {
-    this.tareas = this.tareas.filter(tarea => tarea.id !== id);
+    this.registros = this.registros.filter(
+      registro => registro.id !== id
+    );
+    localStorage.setItem("ubica-registros", JSON.stringify(this.registros));
+  }
+
+  refrescar(event: CustomEvent) {
+    setTimeout(() => {
+      this.cargarRegistros();
+      event.detail.complete();
+    }, 800);
   }
 }
+
+
+

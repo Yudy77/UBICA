@@ -1,0 +1,161 @@
+﻿ion-toolbar {
+  --background: #673ab7;
+  --color: #ffffff;
+}
+
+ion-content {
+  --background: #f5f1fc;
+}
+
+.login-card {
+  max-width: 420px;
+  margin: 40px auto;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+ion-card-header {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+ion-card-title {
+  color: #673ab7;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+ion-card-subtitle {
+  color: #666666;
+  text-transform: none;
+}
+
+h2 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+ion-item {
+  --background: #ffffff;
+  --color: #333333;
+  margin-bottom: 12px;
+}
+
+ion-button {
+  --background: #673ab7;
+  --border-radius: 12px;
+  margin-top: 20px;
+}
+
+ion-button[fill="clear"] {
+  --background: transparent;
+  --color: #673ab7;
+}
+
+.forgot,
+.register {
+  text-align: center;
+  color: #673ab7;
+  margin-top: 18px;
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+ion-item {
+  --background: #ffffff;
+  --color: #333333;
+  --border-color: transparent;
+  --highlight-color-focused: #673ab7;
+  border: 1px solid #ddd6e8;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+ion-input {
+  --color: #333333;
+  --placeholder-color: #777777;
+}
+
+ion-button {
+  --color: #ffffff;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    margin: 20px auto;
+  }
+}
+
+.logo {
+  display: block;
+  width: 180px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 15px;
+}
+
+ion-input {
+  color-scheme: light;
+  --background: transparent;
+  --color: #333333;
+}
+
+ion-input input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  -webkit-text-fill-color: #333333;
+  caret-color: #333333;
+}
+
+ion-item {
+  --background: #ffffff;
+  --color: #333333;
+}
+
+ion-input {
+  font-size: 14px;
+  --color: #333333;
+  --background: transparent;
+}
+
+ion-input::part(native) {
+  font-size: 14px;
+}
+
+:host ::ng-deep ion-input input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #333333 !important;
+  font-size: 14px !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+ion-card-subtitle {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+ion-input {
+  font-size: 16px !important;
+}
+
+ion-input::part(native) {
+  font-size: 16px;
+}
+
+ion-button {
+  font-size: 16px;
+}
+
+.forgot, .register {
+  font-size: 16px;
+  line-height: 1.5;
+}
+

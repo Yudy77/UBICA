@@ -1,0 +1,61 @@
+﻿<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>UBICA</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card class="login-card">
+    <ion-card-header>
+      <img src="assets/logo-ubica.png" class="logo" alt="UBICA">
+      <ion-card-subtitle>
+        Encuentra fácilmente tus objetos y documentos
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <h2>Inicio de sesión</h2>
+
+      <ion-list>
+        <ion-item>
+          <ion-input
+            label="Correo electrónico"
+            labelPlacement="stacked"
+            type="email"
+            [(ngModel)]="email">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Contraseña"
+            labelPlacement="stacked"
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password">
+          </ion-input>
+
+          <ion-button fill="clear" slot="end"
+            aria-label="Mostrar u ocultar contraseña"
+            (click)="togglePassword()">
+            <ion-icon
+              [name]="showPassword ? 'eye-off' : 'eye'">
+            </ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" (click)="login()"
+        [disabled]="!email.trim() || !password.trim()">
+        Iniciar sesión
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+
+      <p class="forgot">¿Olvidaste tu contraseña?</p>
+      <p class="register">¿No tienes cuenta? Regístrate</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
