@@ -1,4 +1,5 @@
-﻿import { Component } from '@angular/core';
+import { RegistrosService } from '../registros.service';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -118,7 +119,7 @@ export class HomePage {
     }
   ];
 
-  constructor() {
+  constructor(private registrosService: RegistrosService) {
     addIcons({
       trash,
       cubeOutline,
@@ -138,21 +139,17 @@ export class HomePage {
     this.cargarRegistros();
   }
 
-  cargarRegistros() {
-    const datos = localStorage.getItem('ubica-registros');
-
-    if (datos !== null) {
-      this.registros = JSON.parse(datos);
-    } else {
-      localStorage.setItem('ubica-registros', JSON.stringify(this.registros));
-    }
+  async cargarRegistros() {
+    this.registros = await this.registrosService.actualizar(
+      registros => registros,
+      this.registros
+    );
   }
 
-  eliminar(id: number) {
-    this.registros = this.registros.filter(
-      registro => registro.id !== id
+  async eliminar(id: number) {
+    this.registros = await this.registrosService.actualizar(
+      registros => registros.filter(registro => registro.id !== id)
     );
-    localStorage.setItem("ubica-registros", JSON.stringify(this.registros));
   }
 
   refrescar(event: CustomEvent) {
@@ -162,6 +159,5 @@ export class HomePage {
     }, 800);
   }
 }
-
 
 

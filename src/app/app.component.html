@@ -1,4 +1,4 @@
-﻿<ion-app>
+<ion-app>
   <ion-split-pane contentId="main-content" when="md">
     <ion-menu contentId="main-content" menuId="principal" [disabled]="!menuHabilitado">
       <ion-header>
@@ -29,6 +29,24 @@
 
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
+  @if (network.connected() !== null) {
+    <div
+      id="estado-conexion"
+      role="status"
+      [style.background-color]="network.connected() ? '#146c43' : '#8a3b12'"
+      style="position: fixed; left: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 100; max-width: calc(100% - 100px); padding: 6px 12px; border-radius: 16px; color: white; font-size: 14px; pointer-events: none;"
+    >
+      @if (network.connected()) {
+        En l&iacute;nea
+        @if (registrosSync.ultimoSincronizado(); as nombre) {
+          <br><strong>Registro sincronizado</strong><br>{{ nombre }}
+        }
+      } @else {
+        <strong>Sin conexi&oacute;n</strong><br>
+        Est&aacute;s sin conexi&oacute;n. Tus datos se guardar&aacute;n localmente.
+      }
+    </div>
+  }
 </ion-app>
 
 

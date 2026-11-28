@@ -31,8 +31,10 @@
     "@capacitor/core": "8.6.2",
     "@capacitor/haptics": "8.0.2",
     "@capacitor/keyboard": "8.0.6",
+    "@capacitor/network": "^8.0.1",
     "@capacitor/status-bar": "8.0.4",
     "@ionic/angular": "^9.0.13",
+    "@ionic/storage": "^4.0.0",
     "ionicons": "^8.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

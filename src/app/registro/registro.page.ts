@@ -1,4 +1,5 @@
-﻿import { Component } from '@angular/core';
+import { RegistrosService } from '../registros.service';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -103,7 +104,7 @@ export class RegistroPage {
   ubicacionGeneral = '';
   ubicacionEspecifica = '';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private registrosService: RegistrosService) {
     addIcons({
       arrowBackOutline,
       cameraOutline,
@@ -112,7 +113,7 @@ export class RegistroPage {
     });
   }
 
-  guardar() {
+  async guardar() {
     if (
       !this.tipo || !this.nombre.trim() ||
       !this.ubicacionGeneral.trim() ||
@@ -132,16 +133,7 @@ export class RegistroPage {
         : 'document-text-outline'
     };
 
-    const registros = JSON.parse(
-      localStorage.getItem('ubica-registros') || '[]'
-    );
-
-    registros.push(registro);
-
-    localStorage.setItem(
-      'ubica-registros',
-      JSON.stringify(registros)
-    );
+    await this.registrosService.guardar(registro);
 
     this.router.navigate(['/home']);
   }

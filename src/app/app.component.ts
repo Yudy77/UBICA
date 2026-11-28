@@ -1,4 +1,6 @@
-﻿import { Component } from '@angular/core';
+import { RegistrosService } from './registros.service';
+import { NetworkService } from './network.service';
+import { Component } from '@angular/core';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { IonApp, IonRouterOutlet, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular';
 import { IonMenu } from '@ionic/angular/ion-menu';
@@ -29,7 +31,10 @@ export class AppComponent {
     this.router.navigate(['/login'], { replaceUrl: true });
   }
 
-  constructor(private router: Router) {
+  constructor(private router: Router, public readonly network: NetworkService, public readonly registrosSync: RegistrosService) {
+    void this.network.start().catch((error) => {
+      console.error('No se pudo iniciar el detector de red', error);
+    });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.menuHabilitado =
